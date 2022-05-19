@@ -7,6 +7,7 @@ Bezen_task.py
 #Importing pandas libraray for data analysis and display function from IPython library for displaying resultant dataframe
 import pandas as pd
 from IPython.display import display
+import matplotlib.pyplot as plt
 
 #Dataframe containig the csv file data
 df = pd.read_csv("2022_02_08-02_30_31_AM.csv")
@@ -39,18 +40,18 @@ df_preprocess.drop(columns=["price_string", "price_string_unf"], inplace = True)
 
 #Creating dataframe by grouping values of different columns and counting the number of products with and without price
 #Null category values are dropped before counting the values
-category_wise = df_preprocess.dropna(subset = ["product_type"]).loc[: , ["category", "value"]].groupby(["category"]).count()
+category_wise = df_preprocess.dropna(subset = ["category"]).loc[: , ["category", "value"]].groupby(["category"]).count()
 product_type_wise = df_preprocess.dropna(subset = ["product_type"]).loc[: , ["product_type", "value"]].groupby(["product_type"]).count()
-level_1_wise = df_preprocess.dropna(subset = ["product_type"]).loc[: , ["level_1", "value"]].groupby(["level_1"]).count()
+level_1_wise = df_preprocess.dropna(subset = ["level_1"]).loc[: , ["level_1", "value"]].groupby(["level_1"]).count()
 
 products_without_price["price_string"].fillna("0", inplace=True)
-category_wise_without = products_without_price.dropna(subset = ["product_type"]).loc[: , ["category", "price_string"]].groupby(["category"]).count()
+category_wise_without = products_without_price.dropna(subset = ["category"]).loc[: , ["category", "price_string"]].groupby(["category"]).count()
 product_type_wise_without = products_without_price.dropna(subset = ["product_type"]).loc[: , ["product_type", "price_string"]].groupby(["product_type"]).count()
-level_1_wise_without = products_without_price.dropna(subset = ["product_type"]).loc[: , ["level_1", "price_string"]].groupby(["level_1"]).count()
+level_1_wise_without = products_without_price.dropna(subset = ["level_1"]).loc[: , ["level_1", "price_string"]].groupby(["level_1"]).count()
 
 
 #Calculating the average price for each category and viewing 1st 5 elements
-category_average = df_preprocess.loc[: , "category":"value"].groupby(["category"]).mean()
+category_average = df_preprocess.loc[: , ["category","value"]].groupby(["category"]).mean()
 #category_average.head()
 
 
@@ -60,7 +61,7 @@ category_average = df_preprocess.loc[: , "category":"value"].groupby(["category"
 #print(level_1_wise["value"].sum() + level_1_wise_without["price_string"].sum())
 
 
-#Required output
+#Required output(textual)
 print("NUMBER OF PRODUCTS WITH PRICE   :", products_with_price.shape[0])
 print("NUMBER OF PRODUCTS WITHOUT PRICE:", products_without_price.shape[0])
 print()
@@ -82,3 +83,37 @@ display(level_1_wise_without)
 
 print("AVERAGE PRICE CATEGORY-WISE:\n")
 display(category_average)
+
+#Required output(visual)
+
+products, categories, levels = df.dropna(subset = ["product_type"])["product_type"].unique(), \
+    df.dropna(subset = ["category"])["category"].unique(), df.dropna(subset = ["level_1"])["level_1"].unique()
+
+plt.bar(["Products with price", "Products without price"], [products_with_price.shape[0], products_without_price.shape[0]])
+plt.title("Products with and without price")
+plt.show()
+
+plt.bar(category_wise.index.values.tolist(), category_wise["value"])
+plt.title("Products having price category-wise")
+plt.show()
+
+plt.bar(category_wise_without.index.values.tolist(), category_wise_without["price_string"])
+plt.title("Products not having price category-wise")
+plt.show()
+
+plt.bar(product_type_wise.index.values.tolist(), product_type_wise["value"])
+plt.title("Products having price product-type-wise")
+plt.show()
+
+plt.bar(product_type_wise_without.index.values.tolist(), product_type_wise_without["price_string"])
+plt.title("Products not having price product-type-wise")
+plt.show()
+
+plt.bar(level_1_wise.index.values.tolist(), level_1_wise["value"])
+plt.title("Products having price level-1-wise")
+plt.show()
+
+plt.bar(level_1_wise_without.index.values.tolist(), level_1_wise_without["price_string"])
+plt.title("Products not having price level-1-wise")
+plt.show()
+# %%

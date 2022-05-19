@@ -123,4 +123,3 @@ plt.bar(level_1_wise_without.index.values.tolist(), level_1_wise_without["price_
 plt.xticks(rotation=90)
 plt.title("Products not having price level-1-wise")
 plt.show()
-# %%

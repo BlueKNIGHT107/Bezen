@@ -51,7 +51,7 @@ level_1_wise_without = products_without_price.dropna(subset = ["level_1"]).loc[:
 
 
 #Calculating the average price for each category and viewing 1st 5 elements
-category_average = df_preprocess.loc[: , ["category","value"]].groupby(["category"]).mean()
+category_average = df_preprocess.dropna(subset = ["category"]).loc[: , ["category","value"]].groupby(["category"]).mean()
 #category_average.head()
 
 
@@ -66,22 +66,22 @@ print("NUMBER OF PRODUCTS WITH PRICE   :", products_with_price.shape[0])
 print("NUMBER OF PRODUCTS WITHOUT PRICE:", products_without_price.shape[0])
 print()
 
-print("PRODUCTS HAVING PRICE CATEGORY-WISE:\n")
+print("\nPRODUCTS HAVING PRICE CATEGORY-WISE:")
 display(category_wise)
-print("PRODUCTS WITHOUT HAVING PRICE CATEGORY-WISE:\n")
+print("\nPRODUCTS WITHOUT HAVING PRICE CATEGORY-WISE:")
 display(category_wise_without)
 
-print("PRODUCTS HAVING PRICE PRODUCT-TYPE-WISE:\n")
+print("\nPRODUCTS HAVING PRICE PRODUCT-TYPE-WISE:")
 display(product_type_wise)
-print("PRODUCTS WITHOUT HAVING PRICE PRODUCT-TYPE-WISE:\n")
+print("\nPRODUCTS WITHOUT HAVING PRICE PRODUCT-TYPE-WISE:")
 display(product_type_wise_without)
 
-print("PRODUCTS HAVING PRICE LEVEL-1-WISE:\n")
+print("\nPRODUCTS HAVING PRICE LEVEL-1-WISE:")
 display(level_1_wise)
-print("PRODUCTS WITHOUT HAVING PRICE LEVEL-1-WISE:\n")
+print("\nPRODUCTS WITHOUT HAVING PRICE LEVEL-1-WISE:")
 display(level_1_wise_without)
 
-print("AVERAGE PRICE CATEGORY-WISE:\n")
+print("\nAVERAGE PRICE CATEGORY-WISE:")
 display(category_average)
 
 #Required output(visual)
@@ -122,4 +122,9 @@ plt.show()
 plt.bar(level_1_wise_without.index.values.tolist(), level_1_wise_without["price_string"])
 plt.xticks(rotation=90)
 plt.title("Products not having price level-1-wise")
+plt.show()
+
+plt.bar(category_average.index.values.tolist(), category_average["value"])
+plt.xticks(rotation=90)
+plt.title("Average price of products in each category")
 plt.show()

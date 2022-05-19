@@ -90,30 +90,37 @@ products, categories, levels = df.dropna(subset = ["product_type"])["product_typ
     df.dropna(subset = ["category"])["category"].unique(), df.dropna(subset = ["level_1"])["level_1"].unique()
 
 plt.bar(["Products with price", "Products without price"], [products_with_price.shape[0], products_without_price.shape[0]])
+plt.xticks(rotation=90)
 plt.title("Products with and without price")
 plt.show()
 
 plt.bar(category_wise.index.values.tolist(), category_wise["value"])
+plt.xticks(rotation=90)
 plt.title("Products having price category-wise")
 plt.show()
 
 plt.bar(category_wise_without.index.values.tolist(), category_wise_without["price_string"])
+plt.xticks(rotation=90)
 plt.title("Products not having price category-wise")
 plt.show()
 
 plt.bar(product_type_wise.index.values.tolist(), product_type_wise["value"])
+plt.xticks(rotation=90)
 plt.title("Products having price product-type-wise")
 plt.show()
 
 plt.bar(product_type_wise_without.index.values.tolist(), product_type_wise_without["price_string"])
+plt.xticks(rotation=90)
 plt.title("Products not having price product-type-wise")
 plt.show()
 
 plt.bar(level_1_wise.index.values.tolist(), level_1_wise["value"])
+plt.xticks(rotation=90)
 plt.title("Products having price level-1-wise")
 plt.show()
 
 plt.bar(level_1_wise_without.index.values.tolist(), level_1_wise_without["price_string"])
+plt.xticks(rotation=90)
 plt.title("Products not having price level-1-wise")
 plt.show()
 # %%
